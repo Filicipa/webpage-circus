@@ -48,7 +48,7 @@ jobs:
   
         - name: Update image tag in circus.yaml with yq
           run: |
-            yq eval ".spec.source.helm.parameters[] |= select(.name == \"container.image\").value = \"filicipa/webpage-circus:${GITHUB_SHA}\"" -i argocd-repo/dev/applications/circus.yaml
+            yq e '.container.image = "filicipa/webpage-circus:'"$GITHUB_SHA"'"' -i argocd-repo/HelmCharts/MyChart1/values_dev.yaml
         
         - name: Commit and push
           run: |
