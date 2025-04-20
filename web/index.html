@@ -4,19 +4,34 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        .version-text {
-            font-size: 3em;
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             color: white;
-            font-weight: bold;
-            margin-top: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
 
-<body style="background-color:black;">
-    <div class="container" style="text-align:center;">
-        <img style="width:40%; height:auto;" src="circus.jpg">
-        <div class="version-text">Version: 1.1</div>
+<body>
+    <h1>Version: 1</h1>
+    <div class="container">
+        <img src="circus.jpg" alt="Circus Image">
     </div>
 </body>
 
