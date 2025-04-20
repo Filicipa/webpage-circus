@@ -6,7 +6,7 @@ on:
         - master
 
 jobs:
-  docker:
+  CI:
     runs-on: ubuntu-latest
     env:
         name: "filicipa/webpage-circus"
@@ -30,3 +30,27 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: "${{ env.name }}:${{ env.tag }}"
+
+  CD:
+    needs: "CI"
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout argocd repo
+          uses: actions/checkout@v4
+          with:
+            repository: Filicipa/argocd
+            token: ${{ secrets.ARGOCD_REPO_TOKEN }}
+            path: argocd-repo
+  
+        - name: Update image tag in circus.yaml
+          run: |
+            sed -i "s|\(container.image.*:\).*|\1 filicipa/webpage-circus:${{ github.sha }}|" argocd-repo/dev/applications/circus.yaml
+  
+        - name: Commit and push
+          run: |
+            cd argocd-repo
+            git config user.name "GitHub Actions"
+            git config user.email "actions@github.com"
+            git add dev/applications/circus.yaml
+            git commit -m "Update circus image tag to ${{ github.sha }}"
+            git push
