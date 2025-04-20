@@ -44,7 +44,7 @@ jobs:
   
         - name: Update image tag in circus.yaml
           run: |
-            sed -i "s|\(container.image.*:\).*|\1 filicipa/webpage-circus:${{ github.sha }}|" argocd-repo/dev/applications/circus.yaml
+            sed -i "s|\(value: filicipa/webpage-circus:\)[^ ]*|\1${{ github.sha }}|" argocd-repo/dev/applications/circus.yaml
   
         - name: Commit and push
           run: |
