@@ -9,7 +9,7 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     env:
-        name: "filicipa/${GITHUB_REPOSITORY#*/}"
+        name: filicipa/${GITHUB_REPOSITORY#*/}
         tag: "${{ GITHUB.SHA }}"
     steps:
       - name: Login to Docker Hub
