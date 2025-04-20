@@ -46,10 +46,10 @@ jobs:
         #   run: |
         #     sed -i "s|\(value: filicipa/webpage-circus:\)[^ ]*|\1${{ github.sha }}|" argocd-repo/dev/applications/circus.yaml
   
-        - name: Update image tag in circus.yaml
+        - name: Update image tag in circus.yaml with yq
           run: |
-            yq eval '.spec.source.helm.parameters[] |= select(.name == "container.image").value = "filicipa/webpage-circus:${GITHUB_SHA}"' -i argocd-repo/dev/applications/circus.yaml
-
+            yq eval ".spec.source.helm.parameters[] |= select(.name == \"container.image\").value = \"filicipa/webpage-circus:${GITHUB_SHA}\"" -i argocd-repo/dev/applications/circus.yaml
+        
         - name: Commit and push
           run: |
             cd argocd-repo
